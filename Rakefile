@@ -35,7 +35,7 @@ def new_jobs
   candidates.delete_if{ |c| jenkins_jobs.include? c[:job] }
 end
 
-
+puts "jenkins jobs:", jenkins_jobs
 puts "remote branches:", remote_branches
 puts "candidates:", candidates
 puts "new jobs:", new_jobs
