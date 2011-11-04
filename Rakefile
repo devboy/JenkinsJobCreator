@@ -32,7 +32,7 @@ def candidates
 end
 
 def new_jobs
-  candidates.delete_if{ |c| jenkins_jobs.includes? c[:job] }
+  candidates.delete_if{ |c| jenkins_jobs.include? c[:job] }
 end
 
 
