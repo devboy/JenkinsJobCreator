@@ -33,7 +33,7 @@ end
 
 def new_jobs
   candidates.delete_if{ |c|
-    puts c[:job], "in jobs?", jenkins_jobs.include? c[:job]
+    puts c[:job], "in jobs?", jenkins_jobs.include?(c[:job])
     jenkins_jobs.include? c[:job] }
 end
 
