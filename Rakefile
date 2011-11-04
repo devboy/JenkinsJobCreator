@@ -5,7 +5,7 @@ def jenkins_dir
 end
 
 def jenkins_jobs
-  Dir.glob( File.join(jenkins_dir,"jobs")).collect{|j| File.directory? j }
+  Dir.glob( File.join(jenkins_dir,"jobs")).keep_if{ |j| File.directory? j }
 end
 
 repository = Git.open( File.dirname(__FILE__))
