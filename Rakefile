@@ -1,8 +1,13 @@
-require 'jenkins'
 require 'git'
 
-repository = Git.open( File.dirname(__FILE__))
-puts repository.branches.remote
+def jenkins_dir
+  ENV["HOME"]
+end
 
-jenkins = Jenkins::Api
-puts jenkins.summary
+def jenkins_jobs
+  Dir.glob( File.join(jenkins_dir,"jobs")).collect{|j| File.directory? j }
+end
+
+repository = Git.open( File.dirname(__FILE__))
+
+puts jenkins_jobs
