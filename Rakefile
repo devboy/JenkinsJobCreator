@@ -8,7 +8,7 @@ def jenkins_jobs
   jobs_dir = "#{jenkins_dir}/jobs/"
   Dir.glob( jobs_dir + "*" ).
       keep_if{ |j| File.directory? j }.
-      map { |j| j.delete jobs_dir }
+      map { |j| j.gsub jobs_dir, "" }
 end
 
 repository = Git.open( File.dirname(__FILE__))
