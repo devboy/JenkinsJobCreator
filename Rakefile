@@ -19,7 +19,7 @@ end
 
 def remote_branches
   repository.branches.remote.map(&:to_s).
-      keep_if{ |b| b.match /^remotes\// && !b.match(/origin\/HEAD/) }.
+      keep_if{ |b| b.match(/^remotes\//) && !b.match(/origin\/HEAD/) }.
       map{ |b| b.gsub("remotes/","") }
 end
 
