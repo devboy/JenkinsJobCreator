@@ -1,6 +1,6 @@
 require 'git'
 
-JOB = "JenkinsJobCreator"
+JOB = "JenkinsBranchTest"
 
 def jenkins_dir
   ENV["HOME"]
