@@ -1,7 +1,13 @@
 require 'git'
 
+JOB = "JenkinsJobCreator"
+
 def jenkins_dir
   ENV["HOME"]
+end
+
+def repository
+  @_repository ||= Git.open( File.dirname(__FILE__) )
 end
 
 def jenkins_jobs
@@ -11,6 +17,26 @@ def jenkins_jobs
       map { |j| j.gsub jobs_dir, "" }
 end
 
-repository = Git.open( File.dirname(__FILE__))
+def remote_branches
+  repository.branches.remote.map(&:to_s).
+      keep_if{ |b| b.match /^remotes\// }.
+      map{ |b| b.gsub("remotes/","") }
+end
 
-puts jenkins_jobs
+def job_name branch
+  JOB+"(#{branch.gsub("origin/","").gsub(/[^a-zA-Z0-9_-]/, "-")})"
+end
+
+def candidates
+  remote_branches.map{ |b| {:job => job_name(b),:branch => b} }
+end
+
+def new_jobs
+  candidates.delete_if{ |c| jenkins_jobs.includes? c[:job] }
+end
+
+
+puts "remote branches:", remote_branches
+puts "candidates:", candidates
+puts "new jobs:", new_jobs
+
