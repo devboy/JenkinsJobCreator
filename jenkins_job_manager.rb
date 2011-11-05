@@ -59,6 +59,7 @@ class JenkinsJobManager
     delete_job_candidates.each{ |c|
       puts "candidate: #{c.inspect}"
       puts "hash? #{c.kind_of? Hash}"
+      puts "string? #{c.kind_of? String}"
       puts "Deleting job #{c[:job]}."
       FileUtils.rm_r job_dir(c[:job])
     }
