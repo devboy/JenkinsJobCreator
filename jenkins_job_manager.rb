@@ -57,6 +57,7 @@ class JenkinsJobManager
 
   def delete_old_jobs
     delete_job_candidates.each{ |c|
+      puts "candidate:#{c}"
       puts "Deleting job #{c[:job]}."
       FileUtils.rm_r job_dir(c[:job])
     }
