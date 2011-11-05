@@ -65,8 +65,8 @@ class JenkinsJobManager
   class JobActions < Thor
     include Thor::Actions
 
-    def self.source_paths
-      File.dirname __FILE__
+    def self.source_root
+      [File.dirname __FILE__]
     end
 
     def create_job_from_template job, job_dir, branch
