@@ -32,14 +32,12 @@ class JenkinsJobManager
   end
 
   def new_job_candidates
-    candidates.delete_if { |c|
-      jenkins_jobs.include? c[:job] }
+    candidates.delete_if { |c| jenkins_jobs.include? c[:job] }
   end
 
   def delete_job_candidates
     job_candidates = candidates +  [{:job => @job, :branch => "**"},{:job => job_name("jenkins-conf"), :branch => "jenkins-conf"}]
-    jobs = jenkins_jobs.
-        keep_if{ |j| j.match(/^#{@job}/) }.
+    jenkins_jobs.keep_if{ |j| j.match(/^#{@job}/) }.
         keep_if{ |j| job_candidates.detect{ |c| c[:job] == j }.nil? }
   end
 
