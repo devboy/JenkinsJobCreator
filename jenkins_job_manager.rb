@@ -1,3 +1,5 @@
+require 'fileutils'
+
 class JenkinsJobManager
 
   def initialize job, jenkins_dir, git_dir
@@ -45,7 +47,22 @@ class JenkinsJobManager
         keep_if{ |j| job_candidates.detect{ |c| c[:job] == j }.nil? }
   end
 
-  class JobAction < Thor
+  def create_new_jobs
+    actions = JobActions.new
+    new_job_candidates.each{ |c|
+      puts "Creating job #{c[:job]} from template."
+      actions.create_job_from_template( c[:job], job_dir(c[:job]), c[:branch] )
+    }
+  end
+
+  def delete_old_jobs
+    delete_job_candidates.each{ |c|
+      puts "Deleting job #{c[:job]}."
+      FileUtils.rm_r job_dir(c[:job])
+    }
+  end
+
+  class JobActions < Thor
     include Thor::Actions
 
     def self.source_paths
